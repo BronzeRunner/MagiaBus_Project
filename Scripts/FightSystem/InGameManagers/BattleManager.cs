@@ -4,26 +4,92 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 using System;
-/*
- 
- */
-//버프 디버프 효과 발동조건
 
-
-
-
-
-public class test : NormalEffects
+public enum coin_type
 {
-    public enum Fight_type 
+    Null, Attack = 2, evasion = 0, Deffend = 0, RevAtk = 1
+}
+/*
+public struct Charecter_State
+{
+    int MaxHp;
+    int curHp;
+    public Dictionary<string, List<float>> CurBuff;
+    public Dictionary<string, List<float>> CurDeBuff;
+
+    public Dictionary<string, UnityEvent> TimeEvent; // 특정순간 발생하는 이벤트들의 모음 (합시작시, 턴시작시, 턴종료시 등등)
+
+
+}
+public struct EffectS
+{
+    public Effect_type type;
+    public int Count;
+    public int Value;
+    public UnityEvent Effect;
+}
+*/
+
+
+
+public struct AttackCoins
+{
+
+    //해당코인을 사용하는 캐릭터(본인) 의 디버프 값을 참조할수있게하는 함수
+
+    public coin_type Type;
+
+
+    /*public void GetValues()
     {
-        both, one, one_AB , Cancle// 합,일방공격,합이후공격
+
+    }*/
+
+    public float clash_minimum; //합 최소값
+    [FoldoutGroup("ChangeValue")] // 변경값 모음
+    public float clash_ChangeValue;//합 최소값변동치
+    [BoxGroup("Coin_ori")]
+    public float coin_minimum; // 코인 기본값
+    [BoxGroup("Coin_ori")]
+    public int coin_Count; //코인개수
+    [FoldoutGroup("ChangeValue")]
+    public float coin_changeValue; // 코인위력 증감
+    [BoxGroup("Coin_ori")]
+    public float coin_OriValue; // 기본코인위력
+    Dictionary<string, List<BattleEffect>> Effects_Dictionary;
+
+    public float GetCoinValue(bool coin)
+    {
+        if (coin)
+        {
+
+            return coin_minimum + coin_changeValue + coin_OriValue;
+        }
+        else
+        {
+            return coin_minimum;
+        }
+
+    }
+
+    public int Atk_Multiplier;
+    public float Atk_Level;
+    public float Atk_LevelPlus;
+    public Character_Main Owner;
+}
+
+
+public class BattleManager :EffectManager
+{
+    public enum Fight_type
+    {
+        both, one, Cancle// 합,일방공격,
     }
 
     [SerializeField]
     bool Debug_Log;
 
-    [SerializeField, ShowIf("Debug_Log",true)]
+    [SerializeField, ShowIf("Debug_Log", true)]
 
     List<bool> Debug_WhichLog;
 
@@ -44,9 +110,9 @@ public class test : NormalEffects
     {
         //CoinCalculate_Clash(null, null);
     }
-    IEnumerator ClashCalCulater(Character_Main Allie,Character_Main Enemy )
+    IEnumerator ClashCalCulater(Character_Main Allie, Character_Main Enemy)
     {
-        if(Allie.Speed_Cur > Enemy.Speed_Cur)
+        if (Allie.Speed_Cur > Enemy.Speed_Cur)
         {
             Attacker_Main_p = Allie;
             Deffender_Main_p = Enemy;
@@ -67,8 +133,8 @@ public class test : NormalEffects
     public Character_Main Attacker_Main_p;
     public AttackCoins Deffender_Coins_p;
     public Character_Main Deffender_Main_p;
-   
-    
+
+
     public Dictionary<EffectScriptType, Action<Component>> AttackerSettingActions;
     public Dictionary<EffectScriptType, Action<Component>> DeffenderSettingActions;
     public float ClashCount;

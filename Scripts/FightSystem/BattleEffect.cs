@@ -5,14 +5,14 @@ using UnityEngine.Events;
 using System;
 
 public enum EffectType { N, Buff, Debuff };
-public enum TriggerType 
+/*public enum TriggerType 
 {   Fail,Clash_Win, Clash_Lose, Clash_Same,ClashEnd_Win, ClashEnd_Lose, ClashCoin_CheckStart, ClashCoin_CheckEnd , Start,End,
     ClashCoin1_true, ClashCoin2_true, ClashCoin3_true, ClashCoin4_true, ClashCoin5_true, ClashCoin6_true, ClashCoin7_true, ClashCoin8_true, ClashCoin9_true, ClashCoin10_true,
     ClashCoin1_false, ClashCoin2_false, ClashCoin3_false, ClashCoin4_false, ClashCoin5_false, ClashCoin6_false, ClashCoin7_false, ClashCoin8_false, ClashCoin9_false, ClashCoin10_false,
     AttackCoin1_true, AttackCoin2_true, AttackCoin3_true, AttackCoin4_true, AttackCoin5_true, AttackCoin6_true, AttackCoin7_true, AttackCoin8_true, AttackCoin9_true, AttackCoin10_true,
     AttackCoin1_false, AttackCoin2_false, AttackCoin3_false, AttackCoin4_false, AttackCoin5_false, AttackCoin6_false, AttackCoin7_false, AttackCoin8_false, AttackCoin9_false, AttackCoin10_false,
     Sink_Trigger
-};
+};*/ //°Á string À¸·Î ¹Ù²Þ
 public enum EffectScriptType { None,Character_MainSelf,FightManager };
 
 public abstract class BattleEffect : MonoBehaviour
@@ -20,7 +20,7 @@ public abstract class BattleEffect : MonoBehaviour
     public EffectScriptType SettingType;
     public bool Effect_IsActive = true;
     EffectType E_Type;
-    public TriggerType Invoke_Type;
+    public string Invoke_Type;
     protected string Effect_Name;
     float Effect_Value;
     float Effect_Count;
@@ -120,14 +120,7 @@ public class Sink :BattleEffect
             return;
         }
         target.MentalValueChange(-ValueCheck());
-        if (target.CharacterTriggers.ContainsKey(TriggerType.Sink_Trigger))
-        {
-            target.CharacterTriggers[TriggerType.Sink_Trigger]?.Invoke();
-        }
-        else
-        {
-            Debug.Log($"{TriggerType.Sink_Trigger} is null");
-        }
+       
         CountChange(-1);
     }
 
@@ -136,10 +129,7 @@ public class Sink :BattleEffect
         if (obj.TryGetComponent<Character_Main>(out target))
         {
             Effect_IsActive = true;
-            if(!target.CharacterTriggers.ContainsKey(TriggerType.Sink_Trigger))
-            {
-                target.CharacterTriggers.Add(TriggerType.Sink_Trigger, null);
-            }
+            
         }
         else
         {
@@ -156,7 +146,7 @@ public class Paralyze : BattleEffect
     public test target;
     public override void Effect_Active()
     {
-        target.CoinCheck_ChangeValue = 0;
+        
         base.Effect_Active();
     }
 }

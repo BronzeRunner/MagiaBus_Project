@@ -68,16 +68,6 @@ public struct EffectCondition
 }
 
 
-/*
-interface CharacterActions:Attack
-{
-    
-}
-interface Attack
-{
-    public void Attack();
-}
-*/
 public interface IChatacter_Main { }
 public class Character_Main : MonoBehaviour
 {
@@ -94,7 +84,18 @@ public class Character_Main : MonoBehaviour
     public float Mental_MaxPer; //정신력 최대값 앞면 확률
     [FoldoutGroup("Mental_Ori")]
     public float Mental_MinPer; //정신력 최소값 앞면 확률
-    public Dictionary<TriggerType, Action> CharacterTriggers; // 현재 발동될 이벤트 
+
+    [FoldoutGroup("Speed")]
+    public float SpeedMin; // 속도 최소값
+    [FoldoutGroup("Speed")]
+    public float SpeedMax; //속도 최대값
+    [FoldoutGroup("Speed")]
+    public float SpeedPlus; // 속도 변동값 (더하기)
+    public float SpeedMultiplier; // 속도 변동값 (곱하기)
+    [FoldoutGroup("Speed")]
+    public float Speed_Cur; // 속도 현재결과값
+
+    //public Dictionary<TriggerType, Action> CharacterTriggers; // 현재 발동될 이벤트 <효과다루는 코드 커맨드 시스템 느낌으로 재작성>
     enum State
     {
         Alive,Stagger,Stagger_P,Stagger_PP,Dead
@@ -104,7 +105,11 @@ public class Character_Main : MonoBehaviour
     Dictionary<EffectType, List<BattleEffect>> CurEffects; // 현재 걸려있는 효과
 
     //inGame
-    public AttackCoins[] CurCoins;
+    public AttackCoins[] CurAttack;
+    public void SetCurCoin(int count,AttackCoins coins)
+    {
+        CurAttack[count] = coins;
+    }
 
     public List<BattleEffect> GetEffects()
     {
