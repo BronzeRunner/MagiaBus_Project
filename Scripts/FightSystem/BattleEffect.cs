@@ -17,6 +17,7 @@ public enum EffectScriptType { None,Character_MainSelf,FightManager };
 
 public abstract class BattleEffect : MonoBehaviour
 {
+    public bool Effect_show = false ;
     public EffectScriptType SettingType;
     public bool Effect_IsActive = true;
     EffectType E_Type;
@@ -30,17 +31,7 @@ public abstract class BattleEffect : MonoBehaviour
         ValueChange(value);
         CountChange(Count);
     }
-    /*
-    public virtual void TurnEnd()
-    {
-        Effect_Count -= 1;
-    }
-    public virtual void TrunStart()
-    {
 
-    }
-    */
-    
     public virtual float ValueCheck()
     {
         return Effect_Value;

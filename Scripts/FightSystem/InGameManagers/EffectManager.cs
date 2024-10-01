@@ -4,7 +4,7 @@ using System;
 
 public class Character_Connector : MonoBehaviour 
 {
-    Character_Main Character;
+    public Character_Main Character;
     public List<BattleEffect> ActiveEffects= new List<BattleEffect>();
     public List<BattleEffect> DeadEffect = new List<BattleEffect>(); // 횟수값 0 등등 발동,영향을 아예 못주는 이펙트
     bool IsDead = false;
@@ -34,7 +34,7 @@ public class Character_Connector : MonoBehaviour
 public class EffectManager : MonoBehaviour
 {
     protected BattleManager BManager;
-    public Dictionary<int, Character_Connector[]> Character_Teams;
+    //public Dictionary<int, Character_Connector[]> Character_Teams;
 
 
 

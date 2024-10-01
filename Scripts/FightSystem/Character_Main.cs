@@ -87,16 +87,41 @@ public class Character_Main : MonoBehaviour
 
     [FoldoutGroup("Speed")]
     public float SpeedMin; // 속도 최소값
+    public float Speed_GetMin()
+    {
+        float Value = SpeedMin*(Speed_Changes.ContainsKey("Multi_Max") ? Speed_Changes["Multi_Max"] : 1) + (Speed_Changes.ContainsKey("Plus_Min") ? Speed_Changes["Plus_Max"] : 0);
+        return Value;
+    }
     [FoldoutGroup("Speed")]
     public float SpeedMax; //속도 최대값
+    public float Speed_GetMax()
+    {
+        float Value = SpeedMax * (Speed_Changes.ContainsKey("Multi_Min") ? Speed_Changes["Multi_Min"] : 1) + (Speed_Changes.ContainsKey("Plus_Max") ? Speed_Changes["Plus_Max"] : 0);
+        return Value;
+    }
     [FoldoutGroup("Speed")]
-    public float SpeedPlus; // 속도 변동값 (더하기)
-    public float SpeedMultiplier; // 속도 변동값 (곱하기)
+    public Dictionary<string, float> Speed_Changes = new Dictionary<string, float>(); // Plus_[] ([]값 + 값)  , Multi_[] ([]값 * 값)
     [FoldoutGroup("Speed")]
     public float Speed_Cur; // 속도 현재결과값
 
+    
+
+
+    public float Speed_Set()// 100 = max
+    {
+        int min = (int)Speed_GetMin();
+        int max = (int)Speed_GetMax();
+        if (min < max)
+            Speed_Cur = UnityEngine.Random.Range(min, max + 1) + (Speed_Changes.ContainsKey("Plus_Cur") ? Speed_Changes["Plus_Cur"] : 0);
+        else
+            Speed_Cur = min;
+
+        return Speed_Cur;
+    }
+
     //public Dictionary<TriggerType, Action> CharacterTriggers; // 현재 발동될 이벤트 <효과다루는 코드 커맨드 시스템 느낌으로 재작성>
-    enum State
+    public State CurState = State.Alive;
+    public enum State
     {
         Alive,Stagger,Stagger_P,Stagger_PP,Dead
     }

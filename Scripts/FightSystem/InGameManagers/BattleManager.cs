@@ -81,6 +81,42 @@ public struct AttackCoins
 
 public class BattleManager :EffectManager
 {
+
+
+    List<List<Character_Connector>> Character_Group_Select; //아군 적 3세력 선택순서 나열
+    List<List<Character_Connector>> Character_Group_Speed; //아군 적 3세력 그룹 속도순 나열 (턴시작시마다 속도 정하고 정렬)
+
+    public void Group_Speed_Set(int i)
+    {
+        List<Character_Connector> Connectors =new List<Character_Connector>();
+        int count = 0;
+        foreach(Character_Connector Connector in Character_Group_Select[i])
+        {
+            if(Connector.Character.CurState == Character_Main.State.Dead)
+            {
+                break;
+            }
+            Connector.Character.Speed_Set();
+            //Connectors.Add(Connector);
+            for(int i2 =count; i2 > 0; i2 --)
+            {
+                if (Connectors[i2].Character.Speed_Cur > Connectors[i2 -1].Character.Speed_Cur)
+                {
+                    Connectors[i2] = Connectors[i2 - 1];
+                    Connectors[i2 - 1] = Connector;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        Character_Group_Speed[i] = Connectors;
+
+        
+    }
+    
+
     public enum Fight_type
     {
         both, one, Cancle// 합,일방공격,
@@ -126,6 +162,9 @@ public class BattleManager :EffectManager
         //Attacker Deffender 번갈아가면서 코인 뒤집기 *ui표시는 두 코인 한번에
         //코인 다 뒤집혔을시 값 비교,높은쪽이 승리 패배한쪽은 코인하나 파괴 동일할경우 합+1
         //만들어야할 액션 코인파괴 , 코인토스 , 효과 받기()
+
+
+
         yield return null;
     }
 
