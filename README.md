@@ -1,6 +1,11 @@
 # MagiaBus_Project
  ToBreakTheCycle
 
+추후 Character_Main 으로부터 함수호출하는경우 커플링 제거를위해 추후 ICharacter_Main 으로 대체
+//2024-10-14
+::Character_Group_Create 제작
+
+
 오늘할꺼 (이펙트 사용(배틀매니저에서),속도,속도에따른순서(가능하면 스킬배치까지)) 함수를통한 중계?
 
  림버스프로젝트

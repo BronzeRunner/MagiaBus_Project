@@ -4,6 +4,17 @@ using System;
 
 public class Character_Connector : MonoBehaviour 
 {
+    public Character_Connector()
+    {
+
+    }
+
+    public Character_Connector(Character_Main Main)
+    {
+        Character = Main;
+        IsDead = false;
+    }
+
     public Character_Main Character;
     public List<BattleEffect> ActiveEffects= new List<BattleEffect>();
     public List<BattleEffect> DeadEffect = new List<BattleEffect>(); // 횟수값 0 등등 발동,영향을 아예 못주는 이펙트
@@ -33,6 +44,7 @@ public class Character_Connector : MonoBehaviour
 //BattleManager Attacker Deffender 캐릭터 커넥터로 변경
 public class EffectManager : MonoBehaviour
 {
+
     protected BattleManager BManager;
     //public Dictionary<int, Character_Connector[]> Character_Teams;
 

@@ -69,7 +69,7 @@ public struct EffectCondition
 
 
 public interface IChatacter_Main { }
-public class Character_Main : MonoBehaviour
+public class Character_Main : MonoBehaviour , IChatacter_Main
 {
     [SerializeField]
 

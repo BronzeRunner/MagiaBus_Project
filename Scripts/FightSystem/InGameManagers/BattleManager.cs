@@ -86,6 +86,17 @@ public class BattleManager :EffectManager
     List<List<Character_Connector>> Character_Group_Select; //아군 적 3세력 선택순서 나열
     List<List<Character_Connector>> Character_Group_Speed; //아군 적 3세력 그룹 속도순 나열 (턴시작시마다 속도 정하고 정렬)
 
+    public void Character_Group_Create(Transform parent)
+    {
+        List<Character_Connector> character_Connectors = new List<Character_Connector>(parent.childCount);
+        foreach(Character_Main main in parent.GetComponentsInChildren<Character_Main>())
+        {
+            character_Connectors.Add(new Character_Connector(main)) ;
+        }
+        Character_Group_Select.Add(character_Connectors);
+    }
+
+
     public void Group_Speed_Set(int i)
     {
         List<Character_Connector> Connectors =new List<Character_Connector>();
@@ -113,9 +124,19 @@ public class BattleManager :EffectManager
         }
         Character_Group_Speed[i] = Connectors;
 
-        
+
     }
-    
+
+    public class Fight
+    {
+        Character_Connector Excutioner_A;
+        List<Character_Connector> Targets_A;
+        Character_Connector Excutioner_B;
+        List<Character_Connector> Target_B;
+        
+
+    }
+
 
     public enum Fight_type
     {
