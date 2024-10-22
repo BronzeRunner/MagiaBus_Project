@@ -72,8 +72,6 @@ public interface IChatacter_Main { }
 public class Character_Main : MonoBehaviour , IChatacter_Main
 {
     [SerializeField]
-
-    
     [FoldoutGroup("Mental_Ori")]
     public float Mental = 0; // min -45 max 45
     [FoldoutGroup("Mental_Ori")]
@@ -103,10 +101,6 @@ public class Character_Main : MonoBehaviour , IChatacter_Main
     public Dictionary<string, float> Speed_Changes = new Dictionary<string, float>(); // Plus_[] ([]값 + 값)  , Multi_[] ([]값 * 값)
     [FoldoutGroup("Speed")]
     public float Speed_Cur; // 속도 현재결과값
-
-    
-
-
     public float Speed_Set()// 100 = max
     {
         int min = (int)Speed_GetMin();
@@ -119,6 +113,14 @@ public class Character_Main : MonoBehaviour , IChatacter_Main
         return Speed_Cur;
     }
 
+    public float Hp_Max;
+    public float Hp_Min;
+    public float Hp_Cur;
+    public UnityEvent<int> HpCur_Change;
+    public void HpCurChange(int changeValue)
+    {
+        Hp_Cur += changeValue;
+    }
     //public Dictionary<TriggerType, Action> CharacterTriggers; // 현재 발동될 이벤트 <효과다루는 코드 커맨드 시스템 느낌으로 재작성>
     public State CurState = State.Alive;
     public enum State
