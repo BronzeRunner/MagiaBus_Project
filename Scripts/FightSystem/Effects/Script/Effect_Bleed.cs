@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEditor.Events;
 
 public class Effect_Bleed : BattleEffect
 {
+    
     Character_Main Main;
     /*
      Bleed
@@ -19,6 +21,7 @@ public class Effect_Bleed : BattleEffect
         }
         ValueChange(Value);
         CountChange(Count);
+        Set_Event();
 
     }
     
@@ -28,30 +31,39 @@ public class Effect_Bleed : BattleEffect
     }
 
     public UnityEvent BleedActive ;
-    public UnityEvent BleedCountDecrease ;
+    public UnityEvent<int> BleedCountChange ;
+    public UnityEvent BleedConsume;
+    public UnityEvent BleedTurnEnd;
+    
 
     public override void Effect_Active()
     {
         if(BleedActive == null)
         {
-            //BleedActive +=  Bleed_Active; 
-            //BleedActive
+            //BleedActive = new ;   
         }
         BleedActive?.Invoke();
-        if(BleedCountDecrease == null)
+        if(BleedConsume == null)
         {
 
         }
-        BleedCountDecrease?.Invoke();
+        BleedConsume?.Invoke();
     }
 
     public void Bleed_Active()
     {
         Main.HpCur_Change?.Invoke((int)ValueCheck());
     }
-    public void Bleed_CountDecrease()
+    public void Bleed_CountChange(int count)
+    {
+        CountChange(count);
+    }
+    public void Bleed_ValueChange(int value)
+    {
+        ValueChange(value); 
+    }
+    public void Bleed_Consume()
     {
         CountChange(-1);
     }
-
 }
