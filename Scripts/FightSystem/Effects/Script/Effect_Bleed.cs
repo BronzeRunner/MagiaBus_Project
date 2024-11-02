@@ -31,10 +31,32 @@ public class Effect_Bleed : BattleEffect
     }
 
     public UnityEvent BleedActive ;
+    void Set_BleedActive()
+    {
+
+    }
     public UnityEvent<int> BleedCountChange ;
+    void Set_BleedCountChange()
+    {
+
+    }
+    public UnityEvent<int> BleedDamage;
+    void Set_BleedDamage()
+    {
+
+    }
     public UnityEvent BleedConsume;
+    void Set_BleedConsume()
+    {
+
+    }
     public UnityEvent BleedTurnEnd;
-    
+    void Set_BleedTurnEnd()
+    {
+
+    }
+
+
 
     public override void Effect_Active()
     {
@@ -64,6 +86,11 @@ public class Effect_Bleed : BattleEffect
     }
     public void Bleed_Consume()
     {
+        if(BleedDamage != null)
+        {
+
+        }
+        BleedDamage.Invoke(/*위력값 받아오기*/);
         CountChange(-1);
     }
 }

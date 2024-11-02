@@ -1,5 +1,7 @@
 # MagiaBus_Project
  ToBreakTheCycle
+문자 드래그 > Ctr + shift + L (동일한 단어 전부선택) > 변경
+편집 찾기및 바꾸기
 
 추후 Character_Main 으로부터 함수호출하는경우 커플링 제거를위해 추후 ICharacter_Main 으로 대체
 //2024-10-14
