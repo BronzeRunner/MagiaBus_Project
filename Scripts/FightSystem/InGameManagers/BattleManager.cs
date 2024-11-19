@@ -32,7 +32,7 @@ public struct EffectS
 
 
 
-public struct AttackCoins
+public struct AttackCoins 
 {
 
     //해당코인을 사용하는 캐릭터(본인) 의 디버프 값을 참조할수있게하는 함수
@@ -44,7 +44,8 @@ public struct AttackCoins
     {
 
     }*/
-
+    public float Attack_Speed; // 해당공격 속도(일반적으로는 캐릭터속도 그대로)
+    public float Attack_Weight; //공격 가중치
     public float clash_minimum; //합 최소값
     [FoldoutGroup("ChangeValue")] // 변경값 모음
     public float clash_ChangeValue;//합 최소값변동치
@@ -56,7 +57,7 @@ public struct AttackCoins
     public float coin_changeValue; // 코인위력 증감
     [BoxGroup("Coin_ori")]
     public float coin_OriValue; // 기본코인위력
-    Dictionary<string, List<BattleEffect>> Effects_Dictionary;
+    EffectTriggerSystem Skill_Effects;
 
     public float GetCoinValue(bool coin)
     {
@@ -72,6 +73,10 @@ public struct AttackCoins
 
     }
 
+    public void Coin_Break()
+    {
+
+    }
     public int Atk_Multiplier;
     public float Atk_Level;
     public float Atk_LevelPlus;
@@ -127,13 +132,73 @@ public class BattleManager :EffectManager
 
     }
 
+
     public class Fight
     {
+
+        public Fight(Character_Connector A,AttackCoins SkillA,Character_Connector B,AttackCoins SkillB)
+        {
+            Excutioner_A = A;
+            Skill_A = SkillA;
+            //가중치에따른 공격대상 지정 (Target_ 에 추가)
+            Excutioner_B = B;
+            Skill_B = SkillB;
+        }
+        [FoldoutGroup("A")]
         Character_Connector Excutioner_A;
-        List<Character_Connector> Targets_A;
+        [FoldoutGroup("B")]
         Character_Connector Excutioner_B;
+        [FoldoutGroup("A")]
+        List<Character_Connector> Targets_A;
+        [FoldoutGroup("B")]
         List<Character_Connector> Target_B;
+        [FoldoutGroup("A")]
+        AttackCoins Skill_A;
+        [FoldoutGroup("B")]
+        AttackCoins Skill_B;
         
+        public string Clash_Check_A()
+        {
+            string result;
+            while(Skill_A.coin_Count > 0 && Skill_B.coin_Count > 0)
+            {
+                switch (Clash_Check_B())
+                {
+                    case 0: // 합
+                        {
+                            break;
+                        }
+                    case 1: // A 합승리
+                        {
+                            Skill_B.Coin_Break();
+                            break;
+                        }
+                    case 2:// B 합승리
+                        {
+                            Skill_A.Coin_Break();
+                            break;
+                        }
+                }
+
+            }
+            if(Skill_A.coin_Count == 0 && Skill_B.coin_Count == 0)
+            {
+                result = "";
+            }
+            else if(Skill_A.coin_Count <= 0)
+            {
+                result = "";
+            }
+            else
+            {
+                result = "";
+            }
+
+            return result;
+        }
+
+        
+
 
     }
 

@@ -30,51 +30,28 @@ public class Effect_Bleed : BattleEffect
         
     }
 
-    public UnityEvent BleedActive ;
-    void Set_BleedActive()
-    {
-
-    }
-    public UnityEvent<int> BleedCountChange ;
-    void Set_BleedCountChange()
-    {
-
-    }
-    public UnityEvent<int> BleedDamage;
-    void Set_BleedDamage()
-    {
-
-    }
-    public UnityEvent BleedConsume;
-    void Set_BleedConsume()
-    {
-
-    }
-    public UnityEvent BleedTurnEnd;
-    void Set_BleedTurnEnd()
-    {
-
-    }
+    Dictionary<string, UnityEvent> Bleed_Events;
+    Dictionary<string, UnityEvent<int>> Bleed_IntEvents;
 
 
 
     public override void Effect_Active()
     {
-        if(BleedActive == null)
+        if(!Bleed_Events.ContainsKey("BleedActive"))
         {
             //BleedActive = new ;   
         }
-        BleedActive?.Invoke();
-        if(BleedConsume == null)
+        Bleed_Events["BleedActive"]?.Invoke();
+        if(!Bleed_Events.ContainsKey("BleedConsume"))
         {
 
         }
-        BleedConsume?.Invoke();
+        Bleed_Events["BleedConsume"]?.Invoke();
     }
 
     public void Bleed_Active()
     {
-        Main.HpCur_Change?.Invoke((int)ValueCheck());
+        Main.Hp_IntEvents["HpCurChange"]?.Invoke((int)ValueCheck());
     }
     public void Bleed_CountChange(int count)
     {
@@ -86,11 +63,16 @@ public class Effect_Bleed : BattleEffect
     }
     public void Bleed_Consume()
     {
-        if(BleedDamage != null)
-        {
-
-        }
-        BleedDamage.Invoke(/*위력값 받아오기*/);
         CountChange(-1);
+    }
+    public void Bleed_Consume_Active()
+    {
+        //효과사용으로인한 감소
+        Bleed_Consume();
+    }
+    public void Bleed_Consume_UnActive()
+    {
+        //턴종료 로인한 감소
+        Bleed_Consume();
     }
 }

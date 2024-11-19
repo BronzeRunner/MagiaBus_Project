@@ -6,11 +6,6 @@ using System;
 using Sirenix.OdinInspector;
 
 
-
-                                                                                           
-
-
-
 [Serializable]
 public struct EffectCondition
 {
@@ -69,7 +64,7 @@ public struct EffectCondition
 
 
 public interface IChatacter_Main { }
-public class Character_Main : MonoBehaviour , IChatacter_Main
+public class Character_Main : MonoBehaviour, IChatacter_Main
 {
     [SerializeField]
     [FoldoutGroup("Mental_Ori")]
@@ -82,12 +77,12 @@ public class Character_Main : MonoBehaviour , IChatacter_Main
     public float Mental_MaxPer; //정신력 최대값 앞면 확률
     [FoldoutGroup("Mental_Ori")]
     public float Mental_MinPer; //정신력 최소값 앞면 확률
-
+    /*Speed*/
     [FoldoutGroup("Speed")]
     public float SpeedMin; // 속도 최소값
     public float Speed_GetMin()
     {
-        float Value = SpeedMin*(Speed_Changes.ContainsKey("Multi_Max") ? Speed_Changes["Multi_Max"] : 1) + (Speed_Changes.ContainsKey("Plus_Min") ? Speed_Changes["Plus_Max"] : 0);
+        float Value = SpeedMin * (Speed_Changes.ContainsKey("Multi_Max") ? Speed_Changes["Multi_Max"] : 1) + (Speed_Changes.ContainsKey("Plus_Min") ? Speed_Changes["Plus_Max"] : 0);
         return Value;
     }
     [FoldoutGroup("Speed")]
@@ -112,33 +107,48 @@ public class Character_Main : MonoBehaviour , IChatacter_Main
 
         return Speed_Cur;
     }
+    /*Speed*/
 
+    /*Hp*/
+    [FoldoutGroup("Hp")]
     public float Hp_Max;
+    [FoldoutGroup("Hp")]
     public float Hp_Min;
+    [FoldoutGroup("Hp")]
     public float Hp_Cur;
-    public UnityEvent<int> HpCur_Change;
-    public void HpCurChange(int changeValue)
+    [FoldoutGroup("Hp")]
+    public Dictionary<string, UnityEvent<int>>  Hp_IntEvents;
+    public void Hp_EventSetting()
+    {
+
+    }
+    public void Hp_CurChange(int changeValue)
     {
         Hp_Cur += changeValue;
     }
+    /*Hp*/
     //public Dictionary<TriggerType, Action> CharacterTriggers; // 현재 발동될 이벤트 <효과다루는 코드 커맨드 시스템 느낌으로 재작성>
     public State CurState = State.Alive;
+    public Dictionary<string, UnityEvent> State_Events;
+    public Dictionary<string, UnityEvent<int>> State_IntEvents;
+    
+
     public enum State
     {
-        Alive,Stagger,Stagger_P,Stagger_PP,Dead
+        Alive = 1,Stagger = 2,Stagger_P = 3,Stagger_PP = 4,Dead = 0
     }
     Character_Main[] AttackTargets;
     //
-    Dictionary<EffectType, List<BattleEffect>> CurEffects; // 현재 걸려있는 효과
+    //Dictionary<EffectType, List<BattleEffect>> CurEffects; // 현재 걸려있는 효과// EffectManager 로 이전
 
-    //inGame
+    //inGame // battleManager 로 이전 예정
     public AttackCoins[] CurAttack;
     public void SetCurCoin(int count,AttackCoins coins)
     {
         CurAttack[count] = coins;
     }
 
-    public List<BattleEffect> GetEffects()
+    /*public List<BattleEffect> GetEffects()
     {
         List<BattleEffect> result = new List<BattleEffect>();
         foreach (EffectType type in CurEffects.Keys)
@@ -148,7 +158,7 @@ public class Character_Main : MonoBehaviour , IChatacter_Main
         }
         return result;
         
-    }
+    }*/
     
     public virtual void MentalValueChange(float value)
     {

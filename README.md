@@ -14,7 +14,8 @@
 {
 할일
 {
-	
+	BattleManager 에 class fight 에서 합 제작중
+	EventTrigger 스크립트에서 효과 트리거 제작중(BattleManager,connector 에 각각 넣어서 캐릭터 트리거 전체 트리거 나눌예정)
 	공격 방어 계산식 만들기 버프대상(본인 혹은 합진행상대)본인은 본인 상대는 ref값으로
 	이펙트 조건 자신바탕(자기자신 코드) , 상대바탕(합진행하는상대저장 변수ref 값) , 합진행or공격진행 상황바탕(BattleManager) , 이펙트 바탕()
 
