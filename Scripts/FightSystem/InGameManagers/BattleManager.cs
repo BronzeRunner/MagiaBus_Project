@@ -32,56 +32,7 @@ public struct EffectS
 
 
 
-public struct AttackCoins 
-{
 
-    //해당코인을 사용하는 캐릭터(본인) 의 디버프 값을 참조할수있게하는 함수
-
-    public coin_type Type;
-
-
-    /*public void GetValues()
-    {
-
-    }*/
-    public float Attack_Speed; // 해당공격 속도(일반적으로는 캐릭터속도 그대로)
-    public float Attack_Weight; //공격 가중치
-    public float clash_minimum; //합 최소값
-    [FoldoutGroup("ChangeValue")] // 변경값 모음
-    public float clash_ChangeValue;//합 최소값변동치
-    [BoxGroup("Coin_ori")]
-    public float coin_minimum; // 코인 기본값
-    [BoxGroup("Coin_ori")]
-    public int coin_Count; //코인개수
-    [FoldoutGroup("ChangeValue")]
-    public float coin_changeValue; // 코인위력 증감
-    [BoxGroup("Coin_ori")]
-    public float coin_OriValue; // 기본코인위력
-    EffectTriggerSystem Skill_Effects;
-
-    public float GetCoinValue(bool coin)
-    {
-        if (coin)
-        {
-
-            return coin_minimum + coin_changeValue + coin_OriValue;
-        }
-        else
-        {
-            return coin_minimum;
-        }
-
-    }
-
-    public void Coin_Break()
-    {
-
-    }
-    public int Atk_Multiplier;
-    public float Atk_Level;
-    public float Atk_LevelPlus;
-    public Character_Main Owner;
-}
 
 
 public class BattleManager :EffectManager
@@ -128,15 +79,15 @@ public class BattleManager :EffectManager
             }
         }
         Character_Group_Speed[i] = Connectors;
-
+        
 
     }
 
 
-    public class Fight
+    public class Fight_Normal
     {
 
-        public Fight(Character_Connector A,AttackCoins SkillA,Character_Connector B,AttackCoins SkillB)
+        public Fight_Normal(Character_Connector A, Attack_Skill SkillA, Character_Connector B, Attack_Skill SkillB)
         {
             Excutioner_A = A;
             Skill_A = SkillA;
@@ -148,17 +99,29 @@ public class BattleManager :EffectManager
         Character_Connector Excutioner_A;
         [FoldoutGroup("B")]
         Character_Connector Excutioner_B;
-        [FoldoutGroup("A")]
+        /*[FoldoutGroup("A")]
         List<Character_Connector> Targets_A;
         [FoldoutGroup("B")]
-        List<Character_Connector> Target_B;
+        List<Character_Connector> Target_B;*/
         [FoldoutGroup("A")]
-        AttackCoins Skill_A;
+        Attack_Skill Skill_A;
         [FoldoutGroup("B")]
-        AttackCoins Skill_B;
+        Attack_Skill Skill_B;
+        [FoldoutGroup("C")]
+        public int ClashCount_C;
+
+        [FoldoutGroup("A")]
+        int ClashValue_A;
+        [FoldoutGroup("B")]
+        int ClashValue_B;
         
         public string Clash_Check_A()
         {
+            if(Skill_B == null)
+            {
+
+
+            }
             string result;
             while(Skill_A.coin_Count > 0 && Skill_B.coin_Count > 0)
             {
@@ -198,72 +161,59 @@ public class BattleManager :EffectManager
         }
 
         
-
-
-    }
-
-
-    public enum Fight_type
-    {
-        both, one, Cancle// 합,일방공격,
-    }
-
-    [SerializeField]
-    bool Debug_Log;
-
-    [SerializeField, ShowIf("Debug_Log", true)]
-
-    List<bool> Debug_WhichLog;
-
-    List<string> Effect_List;
-    [SerializeField]
-    AttackCoins CurAttackCoinsA;
-    [SerializeField]
-    AttackCoins CurAttackCoinsB;
-    public AttackCoins[] test_Attacks;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //CoinCalculate_Clash(null, null);
-    }
-    IEnumerator ClashCalCulater(Character_Main Allie, Character_Main Enemy)
-    {
-        if (Allie.Speed_Cur > Enemy.Speed_Cur)
+        public int Clash_Check_B()
         {
-            Attacker_Main_p = Allie;
-            Deffender_Main_p = Enemy;
-        }
-        else
-        {
-            Attacker_Main_p = Enemy;
-            Deffender_Main_p = Allie;
+            int Result = 0;
+
+
+            return Result;
         }
 
-        //Attacker Deffender 번갈아가면서 코인 뒤집기 *ui표시는 두 코인 한번에
-        //코인 다 뒤집혔을시 값 비교,높은쪽이 승리 패배한쪽은 코인하나 파괴 동일할경우 합+1
-        //만들어야할 액션 코인파괴 , 코인토스 , 효과 받기()
+        IEnumerator CoinCheck()
+        {
+            while (true)
+            {
+                while(true)
+                {
+                    //합진행중 코인추가 고려
+                    for(int i = 0;i < (Skill_A.coin_Count >= Skill_B.coin_Count ? Skill_A.coin_Count:Skill_B.coin_Count); i++)
+                    {
+                        if(i < Skill_A.coin_Count)
+                        if(UnityEngine.Random.Range(0,100) >= Excutioner_A.Character.GetCoinPercentage())
+                        {
+                            //앞면
+                            ClashValue_A += (int)Skill_A.GetCoinValue(true);
+
+                        }
+                        else
+                        {
+                            //뒷면
+                            ClashValue_A += (int)Skill_A.GetCoinValue(false);
+
+                        }
+                    }
+                    yield return null;
+                    if(true)
+                    {
+                        break;
+                    }
+                    ClashCount_C += 1;
+                    if(ClashCount_C >= 99)
+                    {
+
+                    }
+                    
+                }
+
+                yield return null;
+            }
+        }
+        
 
 
-
-        yield return null;
     }
 
-    public AttackCoins Attacker_Coins_p;
-    public Character_Main Attacker_Main_p;
-    public AttackCoins Deffender_Coins_p;
-    public Character_Main Deffender_Main_p;
 
-
-    public Dictionary<EffectScriptType, Action<Component>> AttackerSettingActions;
-    public Dictionary<EffectScriptType, Action<Component>> DeffenderSettingActions;
-    public float ClashCount;
-    public Fight_type Cases;
     /*IEnumerator CoinCalculate(AttackCoins Attacker_Coins, AttackCoins Deffender_Coins)
     {
         

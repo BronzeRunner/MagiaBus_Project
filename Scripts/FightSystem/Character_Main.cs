@@ -64,7 +64,7 @@ public struct EffectCondition
 
 
 public interface IChatacter_Main { }
-public class Character_Main : MonoBehaviour, IChatacter_Main
+public class Character_Main : SerializedMonoBehaviour, IChatacter_Main
 {
     [SerializeField]
     [FoldoutGroup("Mental_Ori")]
@@ -142,8 +142,8 @@ public class Character_Main : MonoBehaviour, IChatacter_Main
     //Dictionary<EffectType, List<BattleEffect>> CurEffects; // 현재 걸려있는 효과// EffectManager 로 이전
 
     //inGame // battleManager 로 이전 예정
-    public AttackCoins[] CurAttack;
-    public void SetCurCoin(int count,AttackCoins coins)
+    public Attack_Skill[] CurAttack;
+    public void SetCurCoin(int count,Attack_Skill coins)
     {
         CurAttack[count] = coins;
     }

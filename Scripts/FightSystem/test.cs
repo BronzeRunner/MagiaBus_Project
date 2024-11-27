@@ -29,10 +29,10 @@ public class test : NormalEffects
 
     List<string> Effect_List;
     [SerializeField]
-    AttackCoins CurAttackCoinsA;
+    Attack_Skill CurAttackCoinsA;
     [SerializeField]
-    AttackCoins CurAttackCoinsB;
-    public AttackCoins[] test_Attacks;
+    Attack_Skill CurAttackCoinsB;
+    public Attack_Skill[] test_Attacks;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,9 +63,9 @@ public class test : NormalEffects
         yield return null;
     }
 
-    public AttackCoins Attacker_Coins_p;
+    public Attack_Skill Attacker_Coins_p;
     public Character_Main Attacker_Main_p;
-    public AttackCoins Deffender_Coins_p;
+    public Attack_Skill Deffender_Coins_p;
     public Character_Main Deffender_Main_p;
    
     

@@ -1,11 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
-public class EffectTriggerSystem : MonoBehaviour
+[System.Serializable]
+public class EffectTriggerSystem : SerializedMonoBehaviour
 {
+    
+    [SerializeField,FoldoutGroup("EffectTrigger")]
+    
     public Dictionary<string, UnityAction> EffectTrigger_None;
+    [SerializeField, FoldoutGroup("EffectTrigger")]
     public Dictionary<string, UnityAction<int>> EffectTrigger_int;
 
     public void Add_EffectTrigger(string tag,UnityAction Effect)
