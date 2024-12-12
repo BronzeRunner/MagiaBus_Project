@@ -115,14 +115,15 @@ public class BattleManager :EffectManager
         [FoldoutGroup("B")]
         int ClashValue_B;
         
-        public string Clash_Check_A()
+        /* public string Clash_Check_A()
         {
-            if(Skill_B == null)
+           if(Skill_B == null)
             {
 
 
             }
             string result;
+
             while(Skill_A.coin_Count > 0 && Skill_B.coin_Count > 0)
             {
                 switch (Clash_Check_B())
@@ -157,8 +158,8 @@ public class BattleManager :EffectManager
                 result = "";
             }
 
-            return result;
-        }
+            return result; 
+        }*/
 
         
         public int Clash_Check_B()
@@ -168,9 +169,10 @@ public class BattleManager :EffectManager
 
             return Result;
         }
-
+/*
         IEnumerator CoinCheck()
         {
+            
             while (true)
             {
                 while(true)
@@ -207,8 +209,9 @@ public class BattleManager :EffectManager
 
                 yield return null;
             }
+            
         }
-        
+        */
 
 
     }

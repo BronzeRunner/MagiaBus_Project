@@ -8,9 +8,8 @@ using Sirenix.OdinInspector;
 [System.Serializable]
 public class EffectTriggerSystem : SerializedMonoBehaviour
 {
-    
+    //T MainCode;
     [SerializeField,FoldoutGroup("EffectTrigger")]
-    
     public Dictionary<string, UnityAction> EffectTrigger_None;
     [SerializeField, FoldoutGroup("EffectTrigger")]
     public Dictionary<string, UnityAction<int>> EffectTrigger_int;
@@ -44,6 +43,29 @@ public class EffectTriggerSystem : SerializedMonoBehaviour
         if (EffectTrigger_int.ContainsKey(tag))
         {
             EffectTrigger_int[tag] -= Effect;
+        }
+    }
+    /// <summary>
+    /// (tag) 상황시 발동하는 변수를 요구하지않는 이펙트를 발동시킴니다.
+    /// </summary>
+    /// <param name="tag"></param>
+    public void Call_EffectTrigger(string tag)
+    {
+        if (EffectTrigger_None.ContainsKey(tag))
+        {
+            EffectTrigger_None[tag]?.Invoke();
+        }
+    }
+    /// <summary>
+    /// (tag) 상황시 발동하는 int값(value)를 요구는 이펙트를 발동시킴니다.
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="Value"></param>
+    public void Call_EffectTrigger(string tag , int Value)
+    {
+        if (EffectTrigger_int.ContainsKey(tag))
+        {
+            EffectTrigger_int[tag]?.Invoke(Value);
         }
     }
     //public void Find_EffectTrigger(string tag)
