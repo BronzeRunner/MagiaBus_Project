@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
 using Sirenix.OdinInspector;
+public delegate void Rint(ref int i);
 
 [System.Serializable]
 public class EffectTriggerSystem : SerializedMonoBehaviour
 {
+    
     //T MainCode;
     [SerializeField,FoldoutGroup("EffectTrigger")]
     public Dictionary<string, UnityAction> EffectTrigger_None;
     [SerializeField, FoldoutGroup("EffectTrigger")]
-    public Dictionary<string, UnityAction<int>> EffectTrigger_int;
+    public Dictionary<string, Rint> EffectTrigger_int;
 
     public void Add_EffectTrigger(string tag,UnityAction Effect)
     {
@@ -23,7 +25,7 @@ public class EffectTriggerSystem : SerializedMonoBehaviour
         EffectTrigger_None[tag]+= Effect;
 
     }
-    public void Add_EffectTrigger(string tag, UnityAction<int> Effect)
+    public void Add_EffectTrigger(string tag, Rint Effect)
     {
         if (!EffectTrigger_int.ContainsKey(tag))
         {
@@ -38,7 +40,7 @@ public class EffectTriggerSystem : SerializedMonoBehaviour
             EffectTrigger_None[tag] -= Effect;
         }
     }
-    public void Remove_EffectTrigger(string tag, UnityAction<int> Effect)
+    public void Remove_EffectTrigger(string tag, Rint Effect)
     {
         if (EffectTrigger_int.ContainsKey(tag))
         {
@@ -61,11 +63,11 @@ public class EffectTriggerSystem : SerializedMonoBehaviour
     /// </summary>
     /// <param name="tag"></param>
     /// <param name="Value"></param>
-    public void Call_EffectTrigger(string tag , int Value)
+    public void Call_EffectTrigger(string tag , ref int Value)
     {
         if (EffectTrigger_int.ContainsKey(tag))
         {
-            EffectTrigger_int[tag]?.Invoke(Value);
+            EffectTrigger_int[tag]?.Invoke(ref Value);
         }
     }
     //public void Find_EffectTrigger(string tag)

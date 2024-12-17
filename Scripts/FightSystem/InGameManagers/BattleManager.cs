@@ -4,11 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 using System;
-
-public enum coin_type
-{
-    Null, Attack = 2, evasion = 0, Deffend = 0, RevAtk = 1
-}
+using UnityEditor.Experimental.GraphView;
 /*
 public struct Charecter_State
 {
@@ -79,11 +75,11 @@ public class BattleManager :EffectManager
             }
         }
         Character_Group_Speed[i] = Connectors;
-        
-
     }
 
 
+
+    /*
     public class Fight_Normal
     {
 
@@ -99,10 +95,10 @@ public class BattleManager :EffectManager
         Character_Connector Excutioner_A;
         [FoldoutGroup("B")]
         Character_Connector Excutioner_B;
-        /*[FoldoutGroup("A")]
+        [FoldoutGroup("A")]
         List<Character_Connector> Targets_A;
         [FoldoutGroup("B")]
-        List<Character_Connector> Target_B;*/
+        List<Character_Connector> Target_B;
         [FoldoutGroup("A")]
         Attack_Skill Skill_A;
         [FoldoutGroup("B")]
@@ -214,8 +210,8 @@ public class BattleManager :EffectManager
         */
 
 
-    }
-
+    
+    /*
 
     /*IEnumerator CoinCalculate(AttackCoins Attacker_Coins, AttackCoins Deffender_Coins)
     {
@@ -485,4 +481,84 @@ public class BattleManager :EffectManager
         
     }
     */
+}
+public class BattleSystem
+{
+    public int clash_Count;
+    public Attack_Skill clash_SkillA = null, clash_SkillB = null;
+    public int clash_ValueA, clash_ValueB;
+    public void BattleSysyem_Reset()
+    {
+        clash_SkillA = null;
+        clash_SkillB = null;
+
+        clash_Count = 0;
+
+        clash_ValueA = 0;
+        clash_ValueB = 0;
+    }
+    public void Skill_Start(Attack_Skill clash_SkillA, Attack_Skill clash_SkillB)
+    {
+        this.clash_SkillA = clash_SkillA; this.clash_SkillB = clash_SkillB;
+        bool ClashEnd = false;
+        while (!ClashEnd)
+        {
+            //합준비(위치이동 + 합 사용전 모습으로 변경)
+            for (int i = 0; i < (clash_SkillA.Coin_CurCount >= clash_SkillB.Coin_CurCount ? clash_SkillA.Coin_CurCount : clash_SkillB.Coin_CurCount); i++)
+            {
+                if (i < clash_SkillA.Coin_CurCount)
+                {
+                    clash_ValueA += clash_SkillA.CoinToss_Clash(i);
+                }
+
+                if (i < clash_SkillB.Coin_CurCount)
+                {
+                    clash_ValueB += clash_SkillB.CoinToss_Clash(i);
+                }
+            }
+
+            if (clash_ValueA > clash_ValueB) // A 합승리
+            {
+                clash_SkillB.Coin_Lose(1);
+            }
+            else if (clash_ValueA == clash_ValueB) // 무승부
+            {
+                clash_Count += 1;
+            }
+            else // B 합승리
+            {
+                clash_SkillA.Coin_Lose(1);
+            }
+
+            if (clash_Count >= 100 || clash_SkillA.Coin_CurCount <= 0 && clash_SkillB.Coin_CurCount <= 0)
+            {
+                if (clash_SkillA.Coin_CurCount <= 0 && clash_SkillB.Coin_CurCount <= 0)
+                {
+
+                }
+                return;
+            }
+            else if (clash_SkillB.Coin_CurCount <= 0) //B 합 패배
+            {
+                ClashEnd = true;
+                clash_SkillA.Skill_Attack(ComparisonResult.Win, clash_SkillB.Owner);
+
+                clash_SkillB.Skill_Attack(ComparisonResult.Lose, clash_SkillA.Owner);
+
+
+            }
+            else if (clash_SkillA.Coin_CurCount <= 0) //A 합 패배
+            {
+                ClashEnd = true;
+                clash_SkillB.Skill_Attack(ComparisonResult.Win, clash_SkillB.Owner);
+
+                clash_SkillA.Skill_Attack(ComparisonResult.Lose, clash_SkillA.Owner);
+
+            }
+        }
+
+
+    }
+
+
 }

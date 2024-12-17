@@ -41,7 +41,7 @@ public class Effect_Bleed : BattleEffect
         {
             //BleedActive = new ;   
         }
-        Bleed_Events["BleedActive"]?.Invoke();
+        Bleed_Events["BleedActive"]?.Invoke(ValueCheck());
         if(!Bleed_Events.ContainsKey("BleedConsume"))
         {
 
@@ -51,7 +51,8 @@ public class Effect_Bleed : BattleEffect
 
     public void Bleed_Active()
     {
-        Main.Hp_IntEvents["HpCurChange"]?.Invoke((int)ValueCheck());
+        //Main.Hp_IntEvents["HpCurChange"]?.Invoke((int)ValueCheck());
+        Main.Hp_GetDamage(Effect_);
     }
     public void Bleed_CountChange(int count)
     {
