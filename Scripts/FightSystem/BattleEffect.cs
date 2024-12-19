@@ -17,48 +17,68 @@ public enum EffectScriptType { None,Character_MainSelf,FightManager };
 
 public abstract class BattleEffect : MonoBehaviour
 {
+    //public delegate void intDelegate(int i);
     public bool Effect_show = false ;
     public EffectScriptType SettingType;
     public bool Effect_IsActive = true;
     EffectType E_Type;
     public string Invoke_Type;
     protected string Effect_Name;
-    float Effect_Value;
-    float Effect_Count;
+    int Effect_Value;
+    int Effect_Count;
 
-    public virtual void Get(float value, float Count)
+    public virtual void AvilableCheck()
+    {
+        if (Effect_Count <= 0 || Effect_Value <= 0)
+        {
+            EffectRemove();
+        }
+
+    }
+
+    public virtual void Get(int value, int Count)
     {
         ValueChange(value);
         CountChange(Count);
     }
 
-    public virtual float ValueCheck()
+    public virtual int ValueCheck()
     {
         return Effect_Value;
     }
 
-    public virtual float CountCheck()
+    public virtual int CountCheck()
     {
         return Effect_Count;
     }
 
-    public virtual void ValueChange(float Value)
+    public virtual void ValueChange(int Value)
+    {
+        Effect_Value = Value;
+        AvilableCheck();
+    }
+    public virtual void ValueAdd(int Value)
     {
         Effect_Value += Value;
+        AvilableCheck();
     }
 
-    public virtual void CountChange(float count)
+    public virtual void CountChange(int count)
+    {
+        Effect_Count = count;
+        AvilableCheck();
+    }
+    public virtual void CountAdd(int count)
     {
         Effect_Count += count;
-        if (Effect_Count <= 0)
-        {
-            EffectRemove();
-        }
-    }
+        AvilableCheck();
 
+    }
     public virtual void EffectRemove()
     {
         //효과제거
+        Effect_Value = 0;
+        Effect_Count = 0;
         Effect_IsActive = false;
     }
 
@@ -68,12 +88,12 @@ public abstract class BattleEffect : MonoBehaviour
         CountChange(-1);
     }
 
-    public virtual Action SetTrigger()
-    {
-        return Effect_Active;
-    }
+    //public virtual Action SetTrigger()
+    //{
+    //    return Effect_Active;
+    //}
 
-    public virtual void Setting(Component obj)
+    public virtual void Setting()
     {
 
     }
@@ -100,36 +120,100 @@ public interface IBattleEffectInterface : IBattleEffect_SetTrigger , IBattleEffe
     
 }
 
-public class Sink :BattleEffect 
+public class Effect_Sink :BattleEffect 
 {
-    
-    public Character_Main target;
+
+    UnityAction Sink_Active_Delegate;
+    UnityAction<int> Sink_Consume_Delegate;
+    public Character_Main Main;
+    public Effect_Sink(int Value, int Count, Component code)
+    {
+        if (!code.TryGetComponent<Character_Main>(out Main))
+        {
+            EffectRemove();
+        }
+        else
+        {
+            Setting();
+        }
+
+        ValueChange(Value);
+        CountChange(Count);
+
+    }
+    public Effect_Sink(int Value, Component code)
+    {
+        int Count = 1;
+        if (!code.TryGetComponent<Character_Main>(out Main))
+        {
+            EffectRemove();
+        }
+        else
+        {
+            Setting();
+        }
+
+        ValueChange(Value);
+        CountChange(Count);
+    }
+    public Effect_Sink(Component code, int Count)
+    {
+        int Value = 1;
+        if (!code.TryGetComponent<Character_Main>(out Main))
+        {
+            EffectRemove();
+        }
+        else
+        {
+            Setting();
+        }
+
+        ValueChange(Value);
+        CountChange(Count);
+    }
+    public void Sink_Active()
+    {
+        Effect_Active();
+    }
     public override void Effect_Active()
     {
         if(!Effect_IsActive)
         {
             return;
         }
-        target.MentalValueChange(-ValueCheck());
+        Main.MentalValueChange(-ValueCheck());
        
         CountChange(-1);
     }
-
-    public override void Setting(Component obj)
+    public void Sink_Consume_Active(int i)
     {
-        if (obj.TryGetComponent<Character_Main>(out target))
+        if (!Effect_IsActive)
         {
-            Effect_IsActive = true;
-            
+            return;
         }
-        else
-        {
-            Effect_IsActive = false;
-        }
+        // 효과사용으로 인한 감소
+        CountAdd(i);
+    }
+    
+
+    public override void Setting()
+    {
+        
 
     }
 
-    
+    public void SetEvent_Active()
+    {
+        Sink_Active_Delegate = Sink_Active;
+    }
+    public void SetEvent_Consume()
+    {
+        Sink_Consume_Delegate = Sink_Consume_Active;
+    }
+
+
+
+
 }
 
 public class Paralyze : BattleEffect

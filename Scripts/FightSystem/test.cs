@@ -15,64 +15,81 @@ using System;
 
 public class test : NormalEffects
 {
-    public enum Fight_type 
-    {
-        both, one, one_AB , Cancle// 합,일방공격,합이후공격
-    }
-
     [SerializeField]
-    bool Debug_Log;
-
-    [SerializeField, ShowIf("Debug_Log",true)]
-
-    List<bool> Debug_WhichLog;
-
-    List<string> Effect_List;
-    [SerializeField]
-    Attack_Skill CurAttackCoinsA;
-    [SerializeField]
-    Attack_Skill CurAttackCoinsB;
-    public Attack_Skill[] test_Attacks;
-    // Start is called before the first frame update
-    void Start()
+    Attack_Values Object_test;
+    //추후 스크립터블오브젝트 값 json 저장하는 백업 만들기
+    [Button]
+    public void TestButton(int i)
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //CoinCalculate_Clash(null, null);
-    }
-    IEnumerator ClashCalCulater(Character_Main Allie,Character_Main Enemy )
-    {
-        if(Allie.Speed_Cur > Enemy.Speed_Cur)
+        if (Object_test != null)
         {
-            Attacker_Main_p = Allie;
-            Deffender_Main_p = Enemy;
+            Object_test.Skill_Level = i;
         }
-        else
-        {
-            Attacker_Main_p = Enemy;
-            Deffender_Main_p = Allie;
-        }
-
-        //Attacker Deffender 번갈아가면서 코인 뒤집기 *ui표시는 두 코인 한번에
-        //코인 다 뒤집혔을시 값 비교,높은쪽이 승리 패배한쪽은 코인하나 파괴 동일할경우 합+1
-        //만들어야할 액션 코인파괴 , 코인토스 , 효과 받기()
-        yield return null;
     }
 
-    public Attack_Skill Attacker_Coins_p;
-    public Character_Main Attacker_Main_p;
-    public Attack_Skill Deffender_Coins_p;
-    public Character_Main Deffender_Main_p;
-   
-    
-    public Dictionary<EffectScriptType, Action<Component>> AttackerSettingActions;
-    public Dictionary<EffectScriptType, Action<Component>> DeffenderSettingActions;
-    public float ClashCount;
-    public Fight_type Cases;
+    private void Start()
+    {
+        
+    }
+
+    //public enum Fight_type 
+    //{
+    //    both, one, one_AB , Cancle// 합,일방공격,합이후공격
+    //}
+
+    //[SerializeField]
+    //bool Debug_Log;
+
+    //[SerializeField, ShowIf("Debug_Log",true)]
+
+    //List<bool> Debug_WhichLog;
+
+    //List<string> Effect_List;
+    //[SerializeField]
+    //Attack_Skill CurAttackCoinsA;
+    //[SerializeField]
+    //Attack_Skill CurAttackCoinsB;
+    //public Attack_Skill[] test_Attacks;
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+
+    //}
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    //CoinCalculate_Clash(null, null);
+    //}
+    //IEnumerator ClashCalCulater(Character_Main Allie,Character_Main Enemy )
+    //{
+    //    if(Allie.Speed_Cur > Enemy.Speed_Cur)
+    //    {
+    //        Attacker_Main_p = Allie;
+    //        Deffender_Main_p = Enemy;
+    //    }
+    //    else
+    //    {
+    //        Attacker_Main_p = Enemy;
+    //        Deffender_Main_p = Allie;
+    //    }
+
+    //    //Attacker Deffender 번갈아가면서 코인 뒤집기 *ui표시는 두 코인 한번에
+    //    //코인 다 뒤집혔을시 값 비교,높은쪽이 승리 패배한쪽은 코인하나 파괴 동일할경우 합+1
+    //    //만들어야할 액션 코인파괴 , 코인토스 , 효과 받기()
+    //    yield return null;
+    //}
+
+    //public Attack_Skill Attacker_Coins_p;
+    //public Character_Main Attacker_Main_p;
+    //public Attack_Skill Deffender_Coins_p;
+    //public Character_Main Deffender_Main_p;
+
+
+    //public Dictionary<EffectScriptType, Action<Component>> AttackerSettingActions;
+    //public Dictionary<EffectScriptType, Action<Component>> DeffenderSettingActions;
+    //public float ClashCount;
+    //public Fight_type Cases;
     /*IEnumerator CoinCalculate(AttackCoins Attacker_Coins, AttackCoins Deffender_Coins)
     {
         

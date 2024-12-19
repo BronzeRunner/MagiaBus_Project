@@ -33,7 +33,7 @@ public struct EffectS
 
 public class BattleManager :EffectManager
 {
-
+    #region speed
 
     List<List<Character_Connector>> Character_Group_Select; //아군 적 3세력 선택순서 나열
     List<List<Character_Connector>> Character_Group_Speed; //아군 적 3세력 그룹 속도순 나열 (턴시작시마다 속도 정하고 정렬)
@@ -76,9 +76,9 @@ public class BattleManager :EffectManager
         }
         Character_Group_Speed[i] = Connectors;
     }
+    #endregion
 
-
-
+    //속도시스템 , 캐릭터 메인 재확인
     /*
     public class Fight_Normal
     {
@@ -156,9 +156,9 @@ public class BattleManager :EffectManager
 
             return result; 
         }*/
+    List<BattleSystem> battleSystems = new List<BattleSystem>();
 
-        
-        public int Clash_Check_B()
+    public int Clash_Check_B()
         {
             int Result = 0;
 
@@ -487,7 +487,7 @@ public class BattleSystem
     public int clash_Count;
     public Attack_Skill clash_SkillA = null, clash_SkillB = null;
     public int clash_ValueA, clash_ValueB;
-    public void BattleSysyem_Reset()
+    public void BattleSystem_Reset()
     {
         clash_SkillA = null;
         clash_SkillB = null;
@@ -496,6 +496,35 @@ public class BattleSystem
 
         clash_ValueA = 0;
         clash_ValueB = 0;
+    }
+    public bool Clash_EndCheck()
+    {
+        if (clash_Count >= 100 || clash_SkillA.Coin_CurCount <= 0 && clash_SkillB.Coin_CurCount <= 0)
+        {
+            if (clash_SkillA.Coin_CurCount <= 0 && clash_SkillB.Coin_CurCount <= 0)
+            {
+
+            }
+            return true;
+        }
+        else if (clash_SkillB.Coin_CurCount <= 0) //B 합 패배
+        {
+            
+            clash_SkillA.Skill_Attack(ComparisonResult.Win, clash_SkillB.Owner);
+
+            clash_SkillB.Skill_Attack(ComparisonResult.Lose, clash_SkillA.Owner);
+            return true;
+        }
+        else if (clash_SkillA.Coin_CurCount <= 0) //A 합 패배
+        {
+            
+            clash_SkillB.Skill_Attack(ComparisonResult.Win, clash_SkillB.Owner);
+
+            clash_SkillA.Skill_Attack(ComparisonResult.Lose, clash_SkillA.Owner);
+            return true;
+        }
+
+        return false;
     }
     public void Skill_Start(Attack_Skill clash_SkillA, Attack_Skill clash_SkillB)
     {
@@ -520,6 +549,8 @@ public class BattleSystem
             if (clash_ValueA > clash_ValueB) // A 합승리
             {
                 clash_SkillB.Coin_Lose(1);
+                ClashEnd = Clash_EndCheck();
+                // A 합승리 에니메이션
             }
             else if (clash_ValueA == clash_ValueB) // 무승부
             {
@@ -528,37 +559,16 @@ public class BattleSystem
             else // B 합승리
             {
                 clash_SkillA.Coin_Lose(1);
+                ClashEnd = Clash_EndCheck();
+                // B 합승리 에니메이션
             }
 
-            if (clash_Count >= 100 || clash_SkillA.Coin_CurCount <= 0 && clash_SkillB.Coin_CurCount <= 0)
-            {
-                if (clash_SkillA.Coin_CurCount <= 0 && clash_SkillB.Coin_CurCount <= 0)
-                {
-
-                }
-                return;
-            }
-            else if (clash_SkillB.Coin_CurCount <= 0) //B 합 패배
-            {
-                ClashEnd = true;
-                clash_SkillA.Skill_Attack(ComparisonResult.Win, clash_SkillB.Owner);
-
-                clash_SkillB.Skill_Attack(ComparisonResult.Lose, clash_SkillA.Owner);
-
-
-            }
-            else if (clash_SkillA.Coin_CurCount <= 0) //A 합 패배
-            {
-                ClashEnd = true;
-                clash_SkillB.Skill_Attack(ComparisonResult.Win, clash_SkillB.Owner);
-
-                clash_SkillA.Skill_Attack(ComparisonResult.Lose, clash_SkillA.Owner);
-
-            }
+            
         }
 
 
     }
+
 
 
 }

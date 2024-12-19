@@ -9,12 +9,13 @@ public delegate void Rint(ref int i);
 [System.Serializable]
 public class EffectTriggerSystem : SerializedMonoBehaviour
 {
-    
+    //Coin_Toss(n,i) , Turn_End(n) ,Coin_Front(i),Coin_Back(i),Hp_Change(i),Hp_GetDamage(i),Hp_[Reason]Dmg(i),[EffectName]_Get(n),[EffectName]_CountGet(i),[EffectName]_ValueGet(i)
+    //OnHit_[Reason](i)
     //T MainCode;
-    [SerializeField,FoldoutGroup("EffectTrigger")]
-    public Dictionary<string, UnityAction> EffectTrigger_None;
     [SerializeField, FoldoutGroup("EffectTrigger")]
-    public Dictionary<string, Rint> EffectTrigger_int;
+    public Dictionary<string, UnityAction> EffectTrigger_None = new Dictionary<string, UnityAction>();
+    [SerializeField, FoldoutGroup("EffectTrigger")]
+    public Dictionary<string, Rint> EffectTrigger_int = new Dictionary<string, Rint>();
 
     public void Add_EffectTrigger(string tag,UnityAction Effect)
     {
