@@ -1,7 +1,50 @@
 # MagiaBus_Project
  ToBreakTheCycle
-문자 드래그 > Ctr + shift + L (동일한 단어 전부선택) > 변경
-편집 찾기및 바꾸기
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://arca.live/b/lobotomycoperation/71186923 // 버프디버프 효과정리
+https://arca.live/b/lobotomycoperation/84060776 // 죄악공명 공렙증,방렙증 정리
+요약 : 공렙방렙 각각 3당 위력1증가 죄악공명 수에따라 공렙방렙 증가(증가량은 위에 글 참고)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
 
 추후 Character_Main 으로부터 함수호출하는경우 커플링 제거를위해 추후 ICharacter_Main 으로 대체
 //2024-10-14
@@ -39,9 +82,8 @@
 {
 	
 }
-https://arca.live/b/lobotomycoperation/71186923 // 버프디버프 효과정리
-https://arca.live/b/lobotomycoperation/84060776 // 죄악공명 공렙증,방렙증 정리
-요약 : 공렙방렙 각각 3당 위력1증가 죄악공명 수에따라 공렙방렙 증가(증가량은 위에 글 참고)
+
+
 BattleEffect // 침잠,화상,합위력증가 등등 버프 디버프 효과
 {
 	AbstractClass와 Virtual method 를 사용해서 Override를 통해 변경해 적용 
