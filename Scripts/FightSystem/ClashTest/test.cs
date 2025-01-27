@@ -310,13 +310,13 @@ public class test : NormalEffects
         }
     }
     
-    public float Attack_Value;
+    public float skill_Value;
     public float Deffender_Value;
     public void Attack(ref AttackCoins Winner,ref AttackCoins Deffender)
     {
-        Attack_Value = 0;
+        skill_Value = 0;
         Deffender_Value = 0;
-        Attack_Value += Winner.clash_minimum;
+        skill_Value += Winner.clash_minimum;
         //RevAttack 은 TriggerAction쪽으로?
         if (Deffender.Type == coin_type.Deffend)
         {
@@ -329,7 +329,7 @@ public class test : NormalEffects
         }
         for (int i = 0; i < Winner.coin_Count; i ++)
         {
-            Attack_Value += CoinCheck_Attack(Winner.Owner, ref Winner, i);
+            skill_Value += CoinCheck_Attack(Winner.Owner, ref Winner, i);
             if (Deffender.Type == coin_type.evasion)
             {
                 for (int i1 = 0; i1 < Deffender.coin_Count; i1++)
@@ -337,7 +337,7 @@ public class test : NormalEffects
                     Deffender_Value += CoinCheck_Attack(Deffender.Owner, ref Deffender, i1);
                 }
 
-                if(Deffender_Value > Attack_Value)
+                if(Deffender_Value > skill_Value)
                 {
                     //회피성공
                     continue;

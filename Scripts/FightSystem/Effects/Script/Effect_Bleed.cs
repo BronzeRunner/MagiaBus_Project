@@ -40,9 +40,11 @@ public class Effect_Bleed : BattleEffect
         else
         {
             Setting();
-            ValueChange(Value);
-            CountChange(Count);
-        }  
+            
+        }
+
+        ValueChange(Value);
+        CountChange(Count);
     }
     public Effect_Bleed(Component code, int Count)
     {
@@ -100,7 +102,7 @@ public class Effect_Bleed : BattleEffect
     public void Bleed_Damage(int i)
     {
         Main.Call_EffectTrigger("Hp_BleedDmg",ref i);
-        Main.Hp_GetDamage(i);
+        Main.Hp_GetDamage(i,Effect_Name);
     }
     public void Bleed_Get(int Value,int Count)
     {

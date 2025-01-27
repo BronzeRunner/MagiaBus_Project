@@ -1,7 +1,8 @@
 # MagiaBus_Project
  ToBreakTheCycle
 
-
+설명할꺼
+합,합진행,합종료 공격?
 
 
 
