@@ -86,7 +86,7 @@ public class Skill_Main :SerializedMonoBehaviour
 
     #endregion
     //계산식
-    // 코인 앞뒤면에따라 "코인위력" 을 받아옴(Coin_Calculate 스킬 계산유형 반영전전)
+    // 코인 앞뒤면에따라 "코인위력" 을 받아옴(Coin_Calculate 스킬 계산유형 반영전)
     public int Coin_GetValue(int coin_CurCount, int coin_Value,bool coin_bool)
     {
         
@@ -100,7 +100,7 @@ public class Skill_Main :SerializedMonoBehaviour
 
         return result;
     }
-    //구버전전
+    //구버전
     public int Coin_GetValue(int coin_Value,bool coin_bool)
     {
         int result= coin_bool? coin_Value:0;
@@ -167,9 +167,6 @@ public class Skill_Main :SerializedMonoBehaviour
     {
         skill_Value_Cur += coin_Value;
         return coin_Value;
-
-
-
     }
 
     public bool Skill_CoinBreak()

@@ -125,6 +125,7 @@ public class Skill_CoinCaculate : MonoBehaviour
         Coin_Break();
         //합패배
     }
+
     public void Coin_Break()
     {
         Coin_Main coin = skill_Main.Coin_Check();
