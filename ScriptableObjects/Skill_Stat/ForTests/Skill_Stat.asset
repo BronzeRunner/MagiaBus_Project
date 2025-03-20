@@ -26,7 +26,7 @@ MonoBehaviour:
       Data: 0|System.Collections.Generic.List`1[[Coin_Main, Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 7
       Data: 1|Coin_Main, Assembly-CSharp
@@ -46,15 +46,48 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 2|Coin_Main, Assembly-CSharp
+    - Name: coin_Num
+      Entry: 3
+      Data: 1
+    - Name: coin_Result
+      Entry: 5
+      Data: false
+    - Name: coin_IsBroken
+      Entry: 5
+      Data: false
+    - Name: coin_Type
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|Coin_Main, Assembly-CSharp
+    - Name: coin_Num
+      Entry: 3
+      Data: 2
+    - Name: coin_Result
+      Entry: 5
+      Data: false
+    - Name: coin_IsBroken
+      Entry: 5
+      Data: false
+    - Name: coin_Type
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
-    - Name: skill_Coin_Type
-      Entry: 6
-      Data: 
-  skill_Coin_Count: 0
-  skill_Coin_Value: 0
+  skill_Coin_Count: 3
+  skill_Coin_Value: 8
   skill_Coin_CalculateType: 0
-  skill_Value_Normal: 0
+  skill_Value_Normal: 5

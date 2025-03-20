@@ -8,6 +8,8 @@ using Sirenix.OdinInspector;
 [CreateAssetMenu(fileName = "Skill_Stat", menuName = "Scriptable Objects/Skill_Stat")]
 public class Skill_Stat : SerializedScriptableObject
 {
+    //표시되는 스킬이름
+    public string skill_Name;
     public int skill_Coin_Count;
     //코인값 (절대값)
     public int skill_Coin_Value;
@@ -19,6 +21,17 @@ public class Skill_Stat : SerializedScriptableObject
     //코인 계산은 총괄하는 다른코드에서
     public List<Coin_Main> skill_Coins ;
     
-
+    public void Setting_SkillCoinCount()
+    {
+        skill_Coin_Count = skill_Coins.Count;
+        for(int i = 0 ; i <skill_Coins.Count;i++)
+        {
+            skill_Coins[i].coin_Num = i +1;
+            skill_Coins[i].coin_IsBroken = false;
+            skill_Coins[i].coin_Result = false;
+        }
+    }
     
 }
+
+
