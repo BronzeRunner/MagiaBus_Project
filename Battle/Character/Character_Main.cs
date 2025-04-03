@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public enum Skill_Type {N,Attack, Evade, Counter,Deffend,Counter_p,Deffend_p}
@@ -70,6 +69,7 @@ public abstract class Character_Main
 
 
     #endregion
+
     #region  Struggle
     //현재 흐트러짐상태
     Struggle_State character_Struggle_CurState;
@@ -110,6 +110,8 @@ public abstract class Character_Main
         character_Speed_CurSpeed = speedValue;
     }
     #endregion
+
+    
     
 }
 

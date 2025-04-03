@@ -35,9 +35,12 @@ public class Observe_class
 
 public enum Observe_ActiveType{Enter,Excute,Exit};
 //State_Changer 참고
-public class State_StateObserver : MonoBehaviour,IState_Observe
+
+// State_Changer 에서 관리 생태 최소단위
+public class State_StateObserver :IState_Observe
 {
     [SerializeField]
+    //현재 상태
     State_Enum state_Name;
 
     public State_StateObserver(State_Enum state_Enum)

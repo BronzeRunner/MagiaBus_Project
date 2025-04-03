@@ -5,7 +5,7 @@ public class Clash_Compare : MonoBehaviour
 {
     Skill_CoinCaculate clash_A ;
     Skill_CoinCaculate clash_B ;
-
+    int clash_Count;
     public void Clash_ClashStart()
     {
         Coin_Main coin_A = null;
@@ -28,11 +28,13 @@ public class Clash_Compare : MonoBehaviour
             {
                 break;
             }
-            if(false)
+            clash_Count+=1;
+            if(clash_Count>=100)
             {
                 //합 100회 이상일경우
                 return;
             }
+            
             //승리 패배 무승부 알림
 
             //각각 공격 코인 남아있는거 실행
@@ -51,7 +53,7 @@ public class Clash_Compare : MonoBehaviour
             // A합승리 , B합패배
         }
         
-        
+
 
     }
 

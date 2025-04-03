@@ -12,6 +12,7 @@ State_Debuff_Active,
 State_Buff_Active,
 
 }
+//State_MultiState에서 관리 기본 상태패턴
 public class State_Changer : MonoBehaviour//,IState_Check
 {
     //상태 목록 발동될 효과가 있을경우 해당효과 세팅하며 생성
